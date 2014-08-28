@@ -9,6 +9,8 @@ import (
 
 	"github.com/mineo/gocaa"
 	"github.com/shkh/lastfm-go/lastfm"
+	"flag"
+	"os"
 )
 
 const apiKey = "ed572ca7123d746483dd797a6d72bb88"
@@ -16,6 +18,9 @@ const apiKey = "ed572ca7123d746483dd797a6d72bb88"
 const HeaderTempl = "[quote][b]%d[/b] [artist]%s[/artist] - [b][album artist=%s]%s[/album][/b] (%d)[/quote]\n"
 // ImageTempl is the template for an image
 const ImageTempl = "[align=center][url=https://musicbrainz.org/release/%s][img=http://coverartarchive.org/release/%s/front-250][/img][/url][/align]"
+
+var user = flag.String("user", "", "your username on last.fm")
+var limit = flag.Int("albums", 25, "the number of albums")
 
 func getCAAInfo(client *caa.CAAClient, mbid uuid.UUID) (info *caa.CoverArtInfo, err error) {
 	info, err = client.GetReleaseInfo(mbid)
@@ -31,13 +36,17 @@ type lastFMImageInfo struct {
 }
 
 func main() {
-	user := "DasMineo"
+	flag.Parse()
 	lfm := lastfm.New(apiKey, "")
 	caaClient := caa.NewCAAClient("dhis")
 
+	if *user == "" {
+		fmt.Println("no user specified")
+		os.Exit(1)
+	}
 	p := lastfm.P{
-		"user":  user,
-		"limit": 25,
+		"user":  *user,
+		"limit": *limit,
 	}
 	res, err := lfm.User.GetTopAlbums(p)
 
