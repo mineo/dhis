@@ -7,7 +7,7 @@ import (
 
 	"code.google.com/p/go-uuid/uuid"
 
-	"github.com/mineo/gocaa"
+	"gopkg.in/mineo/gocaa.v1"
 	"github.com/shkh/lastfm-go/lastfm"
 	"flag"
 	"os"
