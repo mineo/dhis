@@ -13,6 +13,10 @@ import (
 )
 
 const apiKey = "ed572ca7123d746483dd797a6d72bb88"
+// HeaderTempl is the template for the album header
+const HeaderTempl = "[quote][b]%d[/b] [artist]%s[/artist] - [b][album artist=%s]%s[/album][/b] (%d)[/quote]\n"
+// ImageTempl is the template for an image
+const ImageTempl = "[align=center][url=https://musicbrainz.org/release/%s][img=http://coverartarchive.org/release/%s/front-250][/img][/url][/align]"
 
 func getCAAInfo(client *caa.CAAClient, mbid uuid.UUID) (info *caa.CoverArtInfo, err error) {
 	info, err = client.GetReleaseInfo(mbid)
@@ -90,16 +94,16 @@ func main() {
 
 	wg.Wait()
 
-	for _, info := range lastFmImageInfos {
+	for index, info := range lastFmImageInfos {
+		fmt.Printf(HeaderTempl, index, info.artist, info.artist, info.album, info.plays)
 		if info.mbid == nil {
-			fmt.Printf("%s by %s has no MBID in Last.fm\n", info.album, info.artist)
 			continue
+			// fmt.Printf("%s by %s has no MBID in Last.fm\n", info.album, info.artist)
 		} else if !info.hasCAAImage {
-			fmt.Printf("%s by %s has no image in the CAA\n", info.album, info.artist)
 			continue
+			// fmt.Printf("%s by %s has no image in the CAA\n", info.album, info.artist)
+		} else {
+		    fmt.Printf(ImageTempl, info.mbid.String(), info.mbid.String())
 		}
-
-		fmt.Printf("%s by %s (%d plays)\n", info.album, info.artist, info.plays)
-		fmt.Printf("http://coverartarchive.org/release/%s/front-500\n", info.mbid.String())
 	}
 }
