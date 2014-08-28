@@ -103,7 +103,7 @@ func main() {
 	wg.Wait()
 
 	for index, info := range lastFmImageInfos {
-		fmt.Printf(HeaderTempl, index, info.artist, info.artist, info.album, info.plays)
+		fmt.Printf(HeaderTempl, index + 1, info.artist, info.artist, info.album, info.plays)
 		if info.mbid == nil {
 			continue
 		} else if !info.hasCAAImage {
