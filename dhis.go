@@ -1,4 +1,3 @@
-// Package main provides ...
 package main
 
 import (
@@ -98,10 +97,8 @@ func main() {
 		fmt.Printf(HeaderTempl, index, info.artist, info.artist, info.album, info.plays)
 		if info.mbid == nil {
 			continue
-			// fmt.Printf("%s by %s has no MBID in Last.fm\n", info.album, info.artist)
 		} else if !info.hasCAAImage {
 			continue
-			// fmt.Printf("%s by %s has no image in the CAA\n", info.album, info.artist)
 		} else {
 		    fmt.Printf(ImageTempl, info.mbid.String(), info.mbid.String())
 		}
