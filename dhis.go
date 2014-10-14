@@ -7,15 +7,17 @@ import (
 
 	"code.google.com/p/go-uuid/uuid"
 
-	"gopkg.in/mineo/gocaa.v1"
-	"github.com/shkh/lastfm-go/lastfm"
 	"flag"
+	"github.com/shkh/lastfm-go/lastfm"
+	"gopkg.in/mineo/gocaa.v1"
 	"os"
 )
 
 const apiKey = "ed572ca7123d746483dd797a6d72bb88"
+
 // HeaderTempl is the template for the album header
 const HeaderTempl = "[quote][b]%d[/b] [artist]%s[/artist] - [b][album artist=%s]%s[/album][/b] (%d)[/quote]\n"
+
 // ImageTempl is the template for an image
 const ImageTempl = "[align=center][url=https://musicbrainz.org/release/%s][img=http://coverartarchive.org/release/%s/front-250][/img][/url][/align]"
 
@@ -103,13 +105,13 @@ func main() {
 	wg.Wait()
 
 	for index, info := range lastFmImageInfos {
-		fmt.Printf(HeaderTempl, index + 1, info.artist, info.artist, info.album, info.plays)
+		fmt.Printf(HeaderTempl, index+1, info.artist, info.artist, info.album, info.plays)
 		if info.mbid == nil {
 			continue
 		} else if !info.hasCAAImage {
 			continue
 		} else {
-		    fmt.Printf(ImageTempl, info.mbid.String(), info.mbid.String())
+			fmt.Printf(ImageTempl, info.mbid.String(), info.mbid.String())
 		}
 	}
 }
