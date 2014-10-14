@@ -55,7 +55,7 @@ func main() {
 		return
 	}
 
-	var lastFmImageInfos = make([]lastFMImageInfo, *limit)
+	var lastFmImageInfos = make([]*lastFMImageInfo, *limit)
 
 	var wg sync.WaitGroup
 
@@ -69,7 +69,7 @@ func main() {
 			plays:  plays,
 		}
 
-		lastFmImageInfos[i] = lfmInfo
+		lastFmImageInfos[i] = &lfmInfo
 
 		// Continuing makes no sense because last.fm doesn't have an MBID for
 		// this album
